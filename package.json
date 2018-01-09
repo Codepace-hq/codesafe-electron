@@ -1,0 +1,15 @@
+{
+  "name"    : "Codesafe",
+  "version" : "0.1.0",
+  "main"    : "index.js",
+  "dependencies": {
+    "coffee-script": "1.9"
+  },
+  "devDependencies": {
+    "electron": "^1.7.9",
+    "node-powershell":"3.3.1"
+},
+  "scripts": {
+    "start": "electron index.js"
+  }
+}
