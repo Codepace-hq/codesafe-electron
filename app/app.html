@@ -1,0 +1,34 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Codesave VPN</title>
+  <link rel="stylesheet" media="screen" href="css/style.css">
+  <script>window.$ = window.jQuery = require('jquery');</script>
+</head>
+<body>
+
+  <div id="main-div-overlay" style="position: absolute; top: 0; right: 0; bottom: 0; left: 0; z-index:100000; text-align: center;">
+    <h1 id="main-status-overlay"></h1>
+  </div>
+
+  <h1 id="connectionStatus" class="status">You are not connected. Your internet traffic is unencrypted and your identity is at risk.</h1>
+
+  <div class="btn-submit" style="z-index: 100; display:inline-block;">
+	   <span class="unselectable">Connect</span>
+	   <div class="rotate"></div>
+  </div>
+
+  <footer>
+    <h3 class="unselectable">Made with 💚 by Codepace</h3>
+  </footer>
+
+  <!-- KEEP THIS AT THE BOTTOM OF <body> -->
+  <div id="particles-js" style="z-index: 0;background-color: #353535; position: fixed; bottom: 0px; width: 100%;"></div>
+
+  <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+  <script src="app.js"></script>
+
+</body>
+
+</html>
