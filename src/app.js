@@ -20,6 +20,7 @@ import path from "path";
 const app = remote.app;
 const appDir = jetpack.cwd(app.getAppPath());
 
+const { exec } = require('child_process');
 const powershell = require('node-powershell');
 const firstRun = require('first-run');
 const sudo = require('sudo-prompt');
@@ -33,41 +34,27 @@ var connected = false;
 */
 function setupVPNConfigurations(regions){
   // the regions param is for later, but is unused now
+  var overlayDiv = document.getElementById("main-div-overlay")
+  overlayDiv.style.backgroundColor = "#1ECD97"
+
+  var text = document.getElementById("main-status-overlay")
+  text.innerHTML = "Setting up VPN configurations..."
+
   switch (process.platform) {
-    case "linux":
-      let notification = new Notification('ERROR!', {
-        body: "Codesafe VPN does not support Linux yet :(",
-        silent: true
-      })
-      break;
 
     case "darwin":
-
+      // TODO
       break;
 
     case "win32":
-    var overlayDiv = document.getElementById("main-div-overlay")
-    overlayDiv.style.backgroundColor = "#1ECD97"
-    
-    var text = document.getElementById("main-status-overlay")
-    text.innerHTML = "Setting up VPN configurations..."
+
       var executionPolicy; // Powershell execution policy
 
-      let tempPs = new powershell({
-        noProfile: true
+      let ps = new powershell({
+        noProfile: true,
+        executionPolicy: 'Bypass'
       })
-      tempPs.addCommand('Get-ExecutionPolicy')
-      tempPs.invoke().then(output => { executionPolicy = output })
-      if (executionPolicy == "Restricted"){
-        // Require admin privileges to install vpn config
-        sudo.exec('powershell.exe Set-Location -Path cert:\\localMachine\\my; powershell.exe Import-PfxCertificate -FilePath ' + path.join(__dirname, '..', 'resources', 'vpn_configs', 'carter.p12') + ' -password $(ConvertTo-SecureString YDQqZ_RT -AsPlainText -Force)',
-          null, function(error, stdout, stderr){
-            if (error) throw error
-            console.log('stdout: ' + stdout)
-          })
-      } else {
-
-      }
+      ps.addCommand('certutil -f -importpfx ..\\resources\\vpn_configs\\carter.p12')
 
       break;
     default:
@@ -78,6 +65,7 @@ function setupVPNConfigurations(regions){
       })
 
   }
+  overlayDiv.parentNode.removeChild(overlayDiv)
 }
 
 function connect(){ return true }
